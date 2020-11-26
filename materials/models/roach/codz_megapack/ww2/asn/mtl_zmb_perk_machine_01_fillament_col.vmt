@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	$nodecal 1
+
+	"$basetexture" "models/roach/codz_megapack/ww2/asn/mtl_zmb_perk_machine_01_fillament_col"
+}
