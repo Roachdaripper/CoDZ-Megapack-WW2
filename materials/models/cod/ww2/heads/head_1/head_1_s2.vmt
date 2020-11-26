@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 			"models/cod/ww2/heads/head_1/cjapanese_full_zom_head_s"
+	"$bumpmap" 			"models/cod/ww2/heads/head_1/cjapanese_full_zom_head_n_s2"
+	
+	"$color2"				"[0 0 0]"
+	"$nodecal" 			"1"
+	"$additive"			"1"
+	"$alphatest"			"1"
+	
+	"$phong" 			"1"
+	"$phongexponent"			"15"
+	"$phongboost"			"0.2"
+	"$phongfresnelranges"		"[12.5 12.5 12.5]"
+	
+	"$phongexponenttexture" 		"models/cod/ww2/heads/head_1/cjapanese_full_zom_head_e"
+	"$phongalbedotint"			"1"
+	"$ambientocclusion"		"0.4"
+
+}

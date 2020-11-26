@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 			"models/cod/ww2/heads/head_3/cjapanese_fullzom_head_fdr"
+	"$bumpmap" 			"models/cod/ww2/heads/head_3/cjapanese_fullzom_head_fdr_n"
+	"$nodecal" 			"1"
+	"$alphatest"			"1"
+	
+	"$phong" 			"1"
+	"$phongexponent"			"1"
+	"$phongboost"			"0.9986979"
+	"$phongfresnelranges"		"[0 0.086 1]"
+	
+	"$phongexponenttexture" 		"models/cod/ww2/heads/head_3/cjapanese_fullzom_head_fdr_e"
+	"$phongdisablehalflambert"		"1"
+
+	"$normalmapalphaenvmapmask"	"1"
+
+}

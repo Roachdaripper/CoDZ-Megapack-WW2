@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 			"models/cod/ww2/nz/m40tunic_a"
+	"$bumpmap" 			"models/cod/ww2/nz/m40tunic_n"
+	"$nodecal" 			"1"
+	
+	"$phong" 			"1"
+	"$phongexponent"			"1"
+	"$phongboost"			"0.9986979"
+	"$phongfresnelranges"		"[0 0.086 1]"
+	
+	"$phongexponenttexture" 		"models/cod/ww2/nz/m40tunic_e"
+	"$phongdisablehalflambert"		"1"
+
+	"$normalmapalphaenvmapmask"	"1"
+
+}
