@@ -1,0 +1,21 @@
+"VertexlitGeneric"
+{
+	$nodecal 1
+
+	"$basetexture" "models/roach/codz_megapack/ww2/gdk/zom_do_parts_c"
+	"$bumpmap" "models/roach/codz_megapack/ww2/gdk/zom_do_parts_n"
+	$alphatest 1
+
+	"$color2"		"[0.87 0.87 0.87]"
+	
+	"$phong" "1"
+	"$phongfresnelranges"			"[0.3 0.7 1.5]"
+	$basemapalphaphongmask 0
+	
+	"$phongalbedotint" 0
+
+	"$detail" "models/roach/codz_megapack/ww2/gdk/zom_do_parts_c"
+	$detailscale 1
+	$detailblendmode 7
+	$detailblendfactor 1
+}
