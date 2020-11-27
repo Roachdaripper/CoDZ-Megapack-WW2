@@ -280,6 +280,14 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 		if #snd==1 then self:EmitSound(snd[1])else self:EmitSound(snd[1]..math.random(snd[2])..".wav")end
 	elseif evt[1] == "fx_vfx" then
 		if evt[2]!="bob_engine_blow" then self:StopParticles() end
+		if evt[2] == "ber_bolt_stick_exp" and not self:IsDead() then
+			local num = math.random(4)
+			local mul=1
+			if num==1 then mul=2.5
+			elseif num==2 then mul=2 
+			elseif num==3 then mul=1.5 end
+			self:SetHealth(self:Health() + (math.random(250,500)*mul))
+		end
 		local fx = self.VFX_EVTTABLE[evt[2]]
 		ParticleEffectAttach(fx,PATTACH_POINT_FOLLOW,self,evt[3])
 		-- self:Timer(1,self.StopParticles)
@@ -294,12 +302,6 @@ function ENT:OnMeleeAttack(enemy)
 		self:Timer(175/30,self.EmitSound,"codz_megapack/zmb/ai/mechz2/wpn_grenade_fire_mechz.wav")
 		self:Timer(175/30,self.StopParticles)
 		self:PSAM("powerup",1,self.FaceEnemy)
-		local num = math.random(4)
-		local mul=1
-		if num==1 then mul=2.5
-		elseif num==2 then mul=2 
-		elseif num==3 then mul=1.5 end
-		self:SetHealth(self:Health() + (math.random(250,500)*mul))
 	else
 		self:PSAM("att"..math.random(2),1,self.FaceEnemy)
 	end
@@ -313,12 +315,6 @@ function ENT:OnRangeAttack(enemy)
 		self:Timer(175/30,self.EmitSound,"codz_megapack/zmb/ai/mechz2/wpn_grenade_fire_mechz.wav")
 		self:Timer(175/30,self.StopParticles)
 		self:PSAM("powerup",1,self.FaceEnemy)
-		local num = math.random(4)
-		local mul=1
-		if num==1 then mul=2.5
-		elseif num==2 then mul=2 
-		elseif num==3 then mul=1.5 end
-		self:SetHealth(self:Health() + (math.random(250,500)*mul))
 	else
 		self:PSAM("infect",1,function(self,cycle)
 			if cycle > 50/133 and cycle < 65/133 then self:SetPlaybackRate(0.4) end
