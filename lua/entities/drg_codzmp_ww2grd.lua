@@ -46,7 +46,7 @@ ENT.PossessionBinds = {
 		self:PlaySequenceAndMove("enrage",1,self.PossessionFaceForward)
 	end}},
 	[IN_JUMP] = {{coroutine = true,onkeydown = function(self)
-		self:PlaySequenceAndMoveAbsolute("traverse",1,self.PossessionFaceForward)
+		self:PlaySequenceAndMoveAbsolute("traverse",{multiply=Vector(1.5,1.5,1)},self.PossessionFaceForward)
 		if self:IsOnGround() then 
 			self:EmitSound("codz_megapack/ww2/global/zmb_death_bodyfall_0"..math.random(2,7)..".wav")
 			self:PlaySequenceAndMoveAbsolute("land",1,self.PossessionFaceForward) 
@@ -84,7 +84,7 @@ ENT.UseWalkframes = true
 if SERVER then
 function ENT:WhileClimbing(ladder, left)
 	self:ResetSequence("climb_2")
-	if left < 120 then return true end 
+	if left < 50 then return true end 
 end
 function ENT:OnStopClimbing()
 	self:PlaySequenceAndMoveAbsolute("climb_3")

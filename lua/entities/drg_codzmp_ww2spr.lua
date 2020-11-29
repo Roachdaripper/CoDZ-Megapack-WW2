@@ -65,7 +65,7 @@ ENT.UseWalkframes = true
 if SERVER then
 function ENT:WhileClimbing(ladder, left)
 	self:ResetSequence("climb_2")
-	if left < 90 then return true end 
+	if left < 40 then return true end 
 end
 function ENT:OnStopClimbing()
 	self:PlaySequenceAndMoveAbsolute("climb_3")
@@ -111,8 +111,6 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 		function(self, hit)
 			if #hit > 0 then
 				self:EmitSound("codz_megapack/ww2/bob/zmb_bob_melee_hit_0"..math.random(5)..".wav",100,math.random(95,105))
-			else
-				self:EmitSound("codz_megapack/ww2/bob/zmb_bob_melee_whoosh_0"..math.random(5)..".wav",100,math.random(95,105))
 			end
 		end)
 	elseif e == "bodyfall" then self:EmitSound("codz_megapack/ww2/global/zmb_death_bodyfall_0"..math.random(2,7)..".wav")
@@ -156,6 +154,8 @@ function ENT:OnDeath(dmg)
 	else
 		self:PlaySequenceAndMove("death")
 	end
+	self:SetCollisionBounds(Vector(-1,-1,0),Vector(1,1,1))
+	self:PauseCoroutine(false)
 end
 
 function ENT:OnUpdateAnimation()

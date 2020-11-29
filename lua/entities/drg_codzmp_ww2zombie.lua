@@ -2,16 +2,16 @@ if not DrGBase then return end -- return if DrGBase isn't installed
 ENT.Base = "drgbase_nextbot" -- DO NOT TOUCH (obviously)
 
 -- Misc --
-ENT.PrintName = "Sizzler"
+ENT.PrintName = "Zombie"
 ENT.Category = "CoDZ Megapack: WW2"
-ENT.Models = {"models/roach/codz_megapack/ww2/siz.mdl"}
+ENT.Models = {"models/roach/codz_megapack/ww2/zombie.mdl"}
 ENT.BloodColor = BLOOD_COLOR_RED
 
 -- Relationships --
 ENT.Factions = {"FACTION_CODZOMBIES"}
 
 -- Stats --
-ENT.SpawnHealth = 180
+ENT.SpawnHealth = 125
 
 -- AI --
 ENT.Omniscient = true
@@ -40,7 +40,12 @@ ENT.PossessionViews = {
 }
 ENT.PossessionBinds = {
 	[IN_ATTACK] = {{coroutine = true,onkeydown = function(self)
-		self:PlaySequenceAndMove("att"..math.random(4),1,self.PossessionFaceForward)
+		self:PlaySequenceAndMove("att"..math.random(24),1,self.PossessionFaceForward)
+		if self.GenVox==1 then
+			self:EmitSound("codz_megapack/ww2/vox_gen1/zmb_zde_ft_gen_taunt_"..math.random(35)..".wav",90)
+		else
+			self:EmitSound("codz_megapack/ww2/vox_gen2/zmb_zde_gen2_ml_taunt_"..math.random(21)..".wav",90)
+		end
 	end}},
 	[IN_JUMP] = {{coroutine = true,onkeydown = function(self)
 		self:PlaySequenceAndMoveAbsolute("traverse",1,self.PossessionFaceForward)
@@ -71,9 +76,6 @@ ENT.ClimbOffset = Vector(-10, 0, 0)
 
 ENT.UseWalkframes = true
 
-game.AddParticles("particles/szlr_buildup.pcf")
-	PrecacheParticleSystem("szlr_buildup")
-	
 if SERVER then
 function ENT:OnStartClimbing(ladder, height,down)
 	self:SetPos(self:LocalToWorld(Vector(-20,0,0)))
@@ -92,7 +94,14 @@ function ENT:OnStopClimbing()
 end
 
 function ENT:OnSpawn()
-	self:PlaySequenceAndMove("emerge_transform")
+	self:EmitSound("codz_megapack/zmb/ai/standard/dirt_0"..math.random(0,1)..".wav")
+	ParticleEffect("strider_impale_ground",self:GetPos(),self:GetAngles(),self)	
+	for i=1,60 do
+		self:Timer(0.1*i,function()
+			ParticleEffect("advisor_healthcharger_break",self:LocalToWorld(Vector(20,0,-10)),self:GetAngles(),self)
+		end)
+	end	
+	self:PlaySequenceAndMove("emerge"..math.random(2))
 end
 
 function ENT:OnLandOnGround()
@@ -104,22 +113,14 @@ end
 function ENT:CustomInitialize()
 	self:SetDefaultRelationship(D_HT)
 	
-	self.WalkAnimation = "run"..math.random(4)
-	self.RunAnimation = "run"..math.random(4)
-	self.IdleAnimation = "idle"
+	self.WalkAnimation = "walk"..math.random(10)
+	self.RunAnimation = "run"..math.random(16)
+	self.IdleAnimation = "idle"..math.random(2)
 	self.JumpAnimation = "glide"
 	
-	self.SOUND_EVTTABLE = {
-		["sizzler_trans_shriek"] = {"codz_megapack/ww2/cpe/vox/zmb_corpse_eater_spawn_0", 3},
-		["zvox_siz_sprint"] = {"common/null.wav"},
-		["sizzler_trans_hit"] = {"codz_megapack/zmb/ai/mechz2/wpn_grenade_fire_mechz.wav"},
-		["sizzler_trans_build"] = {"codz_megapack/ww2/siz/zmb_siz_trans_fx_electro_01.wav"},
-		["sizzler_trans_burst"] = {"codz_megapack/ww2/siz/zmb_siz_trans_fx_explo_0", 4},
-		["zvox_siz_sprint_attack_v1"] = {"codz_megapack/ww2/cpe/vox/zmb_corpse_eater_atk_0", 6},
-		["zvox_siz_sprint_attack_v3"] = {"codz_megapack/ww2/cpe/vox/zmb_corpse_eater_atk_0", 6},
-		["zvox_siz_stand_attack_v1"] = {"codz_megapack/ww2/cpe/vox/zmb_corpse_eater_atk_0", 6}
-	}
+	self.GenVox = math.random(2)
 	
+	self.SOUND_EVTTABLE = {["custom_bodyfall_knee"] = {"codz_megapack/ww2/global/melee/zmb_slash_0", 9}}	
 	self:Timer(0.1,self.SetCollisionBounds, Vector(-15,-20,0), Vector(15, 20, 85))
 end
 
@@ -132,12 +133,12 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 		}, 
 		function(self, hit)
 			if #hit > 0 then
-				self:EmitSound("codz_megapack/ww2/bob/zmb_bob_melee_hit_0"..math.random(5)..".wav",100,math.random(95,105))
+				self:EmitSound("codz_megapack/ww2/global/melee/zmb_hit_0"..math.random(8)..".wav",100,math.random(95,105))
 			else
-				self:EmitSound("codz_megapack/ww2/bob/zmb_bob_melee_whoosh_0"..math.random(5)..".wav",100,math.random(95,105))
+				self:EmitSound("codz_megapack/ww2/global/melee/zmb_slash_crawl_0"..math.random(5)..".wav",100,math.random(95,105))
 			end
 		end)
-	elseif e == "start_ragdoll" then self:BecomeRagdoll(DamageInfo())
+	elseif e == "start_ragdoll" and self:IsDead() then self:BecomeRagdoll(DamageInfo())
 	elseif e == "bodyfall" then self:EmitSound("codz_megapack/ww2/global/zmb_death_bodyfall_0"..math.random(2,7)..".wav")
 	elseif e == "breach" then 
 		for k,door in pairs(ents.FindInSphere(self:LocalToWorld(Vector(0,0,75)), 50)) do
@@ -161,27 +162,18 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 	
 	local evt = string.Explode(" ", e, false)
 	if evt[1] == "ps" then
-		if evt[2]=="sizzler_trans_burst" then
-			self:EmitSound("codz_megapack/ww2/siz/zmb_siz_trans_fx_debris_01.wav",100)
-			ParticleEffect("bo3_mangler_blast",self:GetBonePosition(self:LookupBone("j_mainroot")),Angle(0,0,0),self)
-		end
 		local snd = self.SOUND_EVTTABLE[evt[2]]
-		if #snd==1 then self:EmitSound(snd[1])else self:EmitSound(snd[1]..math.random(snd[2])..".wav")end
-	elseif evt[1] == "fx_vfx" then
-		if evt[2]=="szlr_buildup_1" then
-			self:EmitSound("codz_megapack/ww2/siz/zmb_siz_trans_fx_fire_01.wav",100)
-			ParticleEffectAttach("szlr_buildup",PATTACH_ABSORIGIN_FOLLOW,self,0)
-			self:Timer(3,self.StopParticles)
-		elseif evt[2]=="szlr_init_hit" then
-			self:EmitSound("codz_megapack/ww2/siz/zmb_siz_trans_fx_energy_0"..math.random(2)..".wav",100)
-			self:EmitSound("codz_megapack/ww2/siz/zmb_siz_trans_fx_energy_sub.wav",100)
-			ParticleEffectAttach("summon_beam_lightning",PATTACH_ABSORIGIN,self,0)
-		end
+		self:EmitSound(snd[1]..math.random(snd[2])..".wav")
 	end
 end
 
 function ENT:OnMeleeAttack(enemy)
-	self:PlaySequenceAndMove("att"..math.random(4),1,self.FaceEnemy)
+	self:PlaySequenceAndMove("att"..math.random(24),1,self.FaceEnemy)
+	if self.GenVox==1 then
+		self:EmitSound("codz_megapack/ww2/vox_gen1/zmb_zde_ft_gen_taunt_"..math.random(35)..".wav",90)
+	else
+		self:EmitSound("codz_megapack/ww2/vox_gen2/zmb_zde_gen2_ml_taunt_"..math.random(21)..".wav",90)
+	end
 end
 
 function ENT:OnIdle()self:AddPatrolPos(self:RandomPos(1500))end
@@ -190,18 +182,34 @@ function ENT:OnReachedPatrol(pos)self:Wait(math.random(3, 7))end
 function ENT:OnTakeDamage(dmg,hg)
 	if self.Flinching or self:IsDead() then return end
 	
-	if dmg:IsDamageType(DMG_BLAST) or ((dmg:GetDamage()>=40) and (math.random(50)<=12)) then
+	if dmg:IsDamageType(DMG_BLAST) then
 		self.Flinching = true
 		self:CICO(function()
-			self:EmitSound("codz_megapack/ww2/cpe/vox/zmb_corpse_eater_pain_0"..math.random(5)..".wav",511)
-			self:PlaySequenceAndMove("flinch"..math.random(2))
+			if math.random(2)==1 then
+				self:PlaySequenceAndMove("flinch_kd"..math.random(4))
+			else
+				self:PlaySequenceAndMove("death"..math.random(9))
+				self:PlaySequenceAndMove("death_feign"..math.random(2))
+			end
+			self.Flinching = false
+		end)
+	elseif ((dmg:GetDamage()>=40) and (math.random(18)<=12)) then
+		self.Flinching = true
+		self:CICO(function()
+			if math.random(2)==1 then
+				self:PlaySequenceAndMove("flinch_kd"..math.random(4))
+			else
+				self:PlaySequenceAndMove("flinch"..math.random(6))
+			end
 			self.Flinching = false
 		end)
 	end
 end
 function ENT:OnDeath(dmg)
-	-- self:EmitSound("codz_megapack/ww2/cpe/vox/zmb_corpse_eater_death_0"..math.random(4)..".wav",511)
-	self:PlaySequenceAndMove("death"..math.random(4))
+	self:EmitSound("codz_megapack/ww2/spr/vox/zmb_vox_spr_anm_death_0"..math.random(9)..".wav",90)
+	if not dmg:IsDamageType(DMG_BLAST) then
+		self:PlaySequenceAndMove("death"..math.random(9))
+	end
 end
 
 function ENT:OnChaseEnemy(enemy)
