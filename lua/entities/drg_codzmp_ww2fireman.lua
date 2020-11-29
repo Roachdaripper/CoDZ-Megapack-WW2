@@ -213,24 +213,15 @@ function ENT:OnRangeAttack(enemy)
 		self:SetCooldown("PanzerFT",0.1)
 		if file.Exists("entities/vfire/shared.lua", "LUA") then
 			-- self:Ignite(999,0)
-			local count
-			if game.SinglePlayer() then
-				count = math.random(3, 5)
-			else
-				count = math.random(2, 3)
-			end
-
 			local pos = util.QuickTrace(self:GetAttachment(2).Pos,self:GetAimVector()*300,{self,self:GetPossessor()}).HitPos
-
-			for i = 1, count do
-				local life = math.Rand(10, 50)
-				local feed = life / 200
-				if math.random(1, 10) == 1 then
-					feed = feed * 6
-				end
-				local vel = VectorRand() * math.Rand(2, 4)
-				CreateVFireBall(life, feed, pos, vel)
+			
+			local life = math.Rand(10, 50)
+			local feed = life / 200
+			if math.random(1, 10) == 1 then
+				feed = feed * 6
 			end
+			local vel = VectorRand() * math.Rand(2, 4)
+			CreateVFireBall(life, feed, pos, vel)
 		end
 		self:Attack({range=300,damage = math.random(5), type = DMG_BURN, viewpunch=Angle(0,0,0)})
 	end
