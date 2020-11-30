@@ -175,15 +175,16 @@ function ENT:OnMeleeAttack(enemy)
 	end
 	
 	if not self:IsMoving() and not self:IsRunning() then
-		self:PlaySequenceAndMove("s2_zom_brt_stand_atk_v1",1,self.FaceEnemy)
-
-	elseif self:IsMoving() and not self:IsRunning() then
 		local atk = math.random(1,2)
 		if atk == 1 then
-			self:PlaySequenceAndMove("s2_zom_brt_walk_attack_ground_v"..math.random(2),1,self.FaceEnemy)
+			self:PlaySequenceAndMove("s2_zom_brt_stand_atk_v1",1,self.FaceEnemy)
 		else
-			self:PlaySequenceAndMove("s2_zom_brt_walk_attack_v"..math.random(2),1,self.FaceEnemy)
+			self:PlaySequenceAndMove("s2_zom_brt_walk_attack_ground_v"..math.random(2),1,self.FaceEnemy)
 		end
+
+	elseif self:IsMoving() and not self:IsRunning() then
+		self:PlaySequenceAndMove("s2_zom_brt_walk_attack_v"..math.random(2),1,self.FaceEnemy)
+
 	end
 end
 function ENT:OnRangeAttack(enemy)
