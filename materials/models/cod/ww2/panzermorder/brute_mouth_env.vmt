@@ -3,6 +3,7 @@
 	"$basetexture" 		"models/cod/ww2/panzermorder/czom_brute_b_mouth_org1_e"
 	"$bumpmap" 		"models/cod/ww2/panzermorder/czom_brute_b_mouth_org1_n"
 
+	"$nodecal" 		"1"
 	"$color2"			"[0 0 0]"
 	"$additive"		"1"
 

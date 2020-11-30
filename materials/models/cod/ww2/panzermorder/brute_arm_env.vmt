@@ -2,7 +2,8 @@
 {
 	"$basetexture" 		"models/cod/ww2/panzermorder/zom_brute_b_arm_r_org1_e"
 	"$bumpmap" 		"models/cod/ww2/panzermorder/zom_brute_b_arm_r_org1_n"
-
+	
+	"$nodecal" 		"1"
 	"$color2"			"[0 0 0]"
 	"$additive"		"1"
 
