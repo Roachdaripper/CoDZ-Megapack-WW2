@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 			"models/cod/ww2/panzermorder/zom_brute_b_torso_org1_col"
+	"$bumpmap" 			"models/cod/ww2/panzermorder/zom_brute_b_torso_org1_n"
+	"$phongexponenttexture" 		"models/cod/ww2/panzermorder/zom_brute_b_torso_org1_e"
+	"$phongalbedotint"			"1"
+
+	"$nodecal" 			"1"
+	"$color2"				"[0 0 0]"
+	"$translucent"			"1"
+
+	"$phong" 			"1"
+	"$phongboost"			"19.986979"
+	"$phongfresnelranges"		"[0.87 0.9 1]"
+}

@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 		"models/cod/ww2/panzermorder/czom_brute_b_tesla_glass_e"
+	"$bumpmap" 		"models/cod/ww2/panzermorder/czom_brute_b_tesla_glass_n"
+
+	"$color2"			"[0 0 0]"
+	"$additive"		"1"
+
+	"$phong" 		"1"
+	"$phongboost"		"0"
+
+	"$phongfresnelranges"	"[1 0.794 .086]"
+
+
+	"$envmap"		"env_cubemap"
+
+	"$selfillum"		"1"
+	"$envmapfresnel"		"1"
+	"$envmaptint"		"[.81 .81 .81]"
+}
