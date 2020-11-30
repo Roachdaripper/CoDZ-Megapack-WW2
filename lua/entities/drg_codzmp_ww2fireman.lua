@@ -64,6 +64,18 @@ ENT.PossessionBinds = {
 		end
 		if self.FT and (self:GetCooldown("PanzerFT")<=0) then 
 			self:SetCooldown("PanzerFT",0.1)
+			if file.Exists("entities/vfire/shared.lua", "LUA") then
+				-- self:Ignite(999,0)
+				local pos = util.QuickTrace(self:GetAttachment(2).Pos,self:GetAimVector()*300,{self,self:GetPossessor()}).HitPos
+
+				local life = math.Rand(10, 50)
+				local feed = life / 200
+				if math.random(1, 10) == 1 then
+					feed = feed * 6
+				end
+				local vel = VectorRand() * math.Rand(2, 4)
+				CreateVFireBall(life, feed, pos, vel)
+			end
 			self:Attack({range=300,damage = math.random(5), type = DMG_BURN, viewpunch=Angle(0,0,0)})
 			self:Timer(0.1,function()
 				if self:GetPossessor():KeyDown(IN_ATTACK2) then return end
@@ -199,6 +211,18 @@ function ENT:OnRangeAttack(enemy)
 	end
 	if self.FT and (self:GetCooldown("PanzerFT")<=0) then 
 		self:SetCooldown("PanzerFT",0.1)
+		if file.Exists("entities/vfire/shared.lua", "LUA") then
+			-- self:Ignite(999,0)
+			local pos = util.QuickTrace(self:GetAttachment(2).Pos,self:GetAimVector()*300,{self,self:GetPossessor()}).HitPos
+			
+			local life = math.Rand(10, 50)
+			local feed = life / 200
+			if math.random(1, 10) == 1 then
+				feed = feed * 6
+			end
+			local vel = VectorRand() * math.Rand(2, 4)
+			CreateVFireBall(life, feed, pos, vel)
+		end
 		self:Attack({range=300,damage = math.random(5), type = DMG_BURN, viewpunch=Angle(0,0,0)})
 	end
 end
@@ -226,7 +250,7 @@ function ENT:OnTakeDamage(dmg,hg)
 		else
 			self.BPHP = self.BPHP-dmg:GetDamage()
 		end
-	elseif (dmg:GetDamage()>=8) and (math.random(100)<=3) then
+	elseif dmg:IsDamageType(DMG_BLAST) or ((dmg:GetDamage()>=8) and (math.random(100)<=3)) then
 		self.Flinching = true
 		self:CICO(function()
 			self:PlaySequenceAndMove("flinch"..math.random(3))

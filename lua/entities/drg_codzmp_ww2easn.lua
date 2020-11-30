@@ -51,7 +51,7 @@ ENT.PossessionBinds = {
 			ParticleEffect("codww2_meistermeuchler_shockwave",self:WorldSpaceCenter(),Angle(0,0,0),self)
 			self:EmitSound("codz_megapack/ww2/asn/zmb_ablty_stun_burst_use.wav",511)
 			self:BlastAttack({
-				damage = 256,
+				damage = 128,
 				range=300,
 				type = bit.bor(DMG_BLAST,DMG_SHOCK),
 				viewpunch = Angle(20, math.random(-10, 10), 0),
@@ -91,6 +91,7 @@ ENT.PossessionBinds = {
 			and door:GetClass() != "prop_door_rotating" then
 				door:Fire("open")
 			end
+			if IsValid(door) and string.find(door:GetClass(),"button") then door:Fire("press") end
 		end
 	end}},
 	[IN_ATTACK3] = {{coroutine = true,onkeydown = function(self)
@@ -259,7 +260,7 @@ function ENT:ShouldRun()return not self.Stalking end
 
 function ENT:OnTakeDamage(dmg,hg)
 	if self.Flinching or self:IsDead() then return end
-	if dmg:IsDamageType(DMG_BLAST) then
+	if dmg:IsDamageType(DMG_BLAST) and math.random(5)==1 then
 		self.Flinching = true
 		self:CICO(function()
 			self.IdleAnimation = "idle"	

@@ -80,6 +80,7 @@ ENT.PossessionBinds = {
 			and door:GetClass() != "prop_door_rotating" then
 				door:Fire("open")
 			end
+			if IsValid(door) and string.find(door:GetClass(),"button") then door:Fire("press") end
 		end
 	end}},
 	[IN_ATTACK3] = {{coroutine = true,onkeydown = function(self)
