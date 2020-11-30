@@ -2,31 +2,13 @@
 {
 	"$basetexture" 			"models/cod/ww2/panzermorder/czom_brute_b_tesla_glass_col"
 	"$bumpmap" 			"models/cod/ww2/panzermorder/czom_brute_b_tesla_glass_n"
-	"$phongexponenttexture" 		"models/cod/ww2/panzermorder/czom_brute_b_tesla_glass_e"
 
-	"$translucent"			"1"
+	"$translucent"	"1"
 
-	"$nodecal" 			"1"
-	"$color2"				"[0 0 0]"
-	"$blendtintbybasealpha"		"1"
+	"$phong" "1"
+	"$phongboost"	"0"
 
-	"$phong" 			"1"
-	"$phongboost"			"9.9934895"
-	"$phongfresnelranges"		"[0.05 0.115 0.945]"
-	
-	"$phongdisablehalflambert"		"1"
+	"$phongfresnelranges"	"[0 0 0]"	// dummy
 
-	"$envmap"			"env_cubemap"
-	"$normalmapalphaenvmapmask"	"1"
-	"$envmapfresnel"			"1"
-
-	"$envmaptint"			"[0.2 0.2 0.2]"
-
-	"$emissiveBlendEnabled"		"1"
-	"$emissiveBlendTexture"		"dev/null"
-	"$emissiveBlendBaseTexture"		"models/cod/ww2/panzermorder/czom_brute_b_tesla_org1_em"
-	"$emissiveBlendFlowTexture"		"dev/null"
-	"$emissiveBlendTint"		"[3 3 3]"
-	"$emissiveBlendStrength"		"1"
-	"$emissiveBlendScrollVector"		"[0 0]"
+	"$ambientocclusion"	"0"
 }

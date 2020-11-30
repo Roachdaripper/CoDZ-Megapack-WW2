@@ -3,20 +3,16 @@
 	"$basetexture" 			"models/cod/ww2/panzermorder/zom_brute_b_armband_col"
 	"$bumpmap" 			"models/cod/ww2/panzermorder/zom_brute_b_armband_n"
 	"$phongexponenttexture" 		"models/cod/ww2/panzermorder/zom_brute_b_armband_e"
-
 	"$nodecal" 			"1"
 	"$color2"				"[0 0 0]"
-	"$blendtintbybasealpha"		"1"
+	"$blendTintByBaseAlpha"		"1"
 
 	"$phong" 			"1"
-	"$phongboost"			"9.9934895"
-	"$phongfresnelranges"		"[0.05 0.115 0.945]"
-	
-	"$phongdisablehalflambert"		"1"
+	"$phongboost"			"0.49934895"
+	"$phongfresnelranges"		"[0.22 0.856 20]"
 
-	"$envmap"			"env_cubemap"
+	"$envmap" 			"env_cubemap"
 	"$normalmapalphaenvmapmask"	"1"
+	"$envmaptint"			"[0.045 0.045 0.045]"
 	"$envmapfresnel"			"1"
-
-	"$envmaptint"			"[0.2 0.2 0.2]"
 }

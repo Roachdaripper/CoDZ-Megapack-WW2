@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 		"models/cod/ww2/panzermorder/zom_brute_b_torso_org1_sss"
+	"$bumpmap" 		"models/cod/ww2/panzermorder/zom_brute_b_torso_org1_n2"
+	"$color2"			"[0.75 0.75 0.75]"
+	"$additive"		"1"
+
+	"$phong" 		"1"
+
+	"$phongboost"		"0"
+
+	"$phongexponent"		"1.5"
+
+	"$ambientocclusion"	"0.3"
+
+	"$selfillum"		"1"
+	"$selfIllumFresnel"		"1"
+	"$selfIllumFresnelMinMaxExp"	"[0 0.00000001 0.5]"
+	"$selfillumtint"		"[-.000000001 -.000000001 -.000000001]"
+
+	"$nodecal"		"1"
+}
