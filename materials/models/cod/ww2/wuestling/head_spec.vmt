@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 			"models/cod/ww2/wuestling/head_col"
+	"$bumpmap" 			"models/cod/ww2/wuestling/head_nml"
+	"$phongexponenttexture" 		"models/cod/ww2/wuestling/head_ex"
+	"$phongalbedotint"			"1"
+
+	"$nodecal" 			"1"
+	"$color2"				"[0 0 0]"
+	"$translucent"			"1"
+
+	"$phong" 			"1"
+	"$phongboost"			"19.986979"
+	"$phongfresnelranges"		"[0.87 0.9 1]"
+}

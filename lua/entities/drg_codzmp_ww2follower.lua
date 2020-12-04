@@ -4,7 +4,7 @@ ENT.Base = "drgbase_nextbot" -- DO NOT TOUCH (obviously)
 -- Misc --
 ENT.PrintName = "Wuestling"
 ENT.Category = "CoDZ Megapack: WW2"
-ENT.Models = {"models/roach/codz_megapack/ww2/follower.mdl"}
+ENT.Models = {"models/roach/codz_megapack/ww2/wuestling.mdl"}
 ENT.BloodColor = BLOOD_COLOR_RED
 
 -- Relationships --

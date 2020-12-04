@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 			"models/cod/ww2/wuestling/eye_col"
+	"$bumpmap" 			"models/cod/ww2/wuestling/eye_nml"
+	"$phongexponenttexture" 		"models/cod/ww2/wuestling/eye_ex"
+	"$nodecal" 			"1"
+	"$color2"				"[0 0 0]"
+	"$blendTintByBaseAlpha"		"1"
+
+	"$phong" 			"1"
+	"$phongboost"			"9.9934895"
+	"$phongfresnelranges"		"[0.05 0.115 0.945]"
+
+	"$normalmapalphaenvmapmask"	"1"
+	"$envmaptint"			"[.2 .2 .2]"
+	"$envmapfresnel"			"1"
+
+	"$emissiveBlendEnabled"		"1"
+	"$emissiveBlendTexture"		"dev/null"
+	"$emissiveBlendBaseTexture"		"models/cod/ww2/wuestling/eye_em"
+	"$emissiveBlendFlowTexture"		"dev/null"
+	"$emissiveBlendTint" 		"[1 1 1]"
+	"$emissiveBlendStrength"		"1"
+	"$emissiveBlendScrollVector"		"[0 0]"
+}
