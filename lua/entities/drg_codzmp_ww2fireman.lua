@@ -44,6 +44,14 @@ ENT.PossessionBinds = {
 		if self.FT then self:StopFT() end
 		self:PlaySequenceAndMove("att"..math.random(2),1,self.PossessionFaceForward)
 	end}},
+	[IN_RELOAD] = {{coroutine = true,onkeydown = function(self)
+		if self.FT then self:StopFT() end
+		self:EmitSound("codz_megapack/ww2/fireman/vox/zvox_fir_spawn_01.wav",80)
+		self:EmitSound("codz_megapack/ww2/fireman/vox/zvox_fir_intro_roar.wav",511)
+		self.Taunting = true
+			self:PlaySequenceAndMove("taunt",1,self.PossessionFaceForward)
+		self.Taunting = false
+	end}},
 	[IN_USE] = {{coroutine = true,onkeydown = function(self)
 		for k,door in pairs(ents.FindInSphere(self:LocalToWorld(Vector(0,0,75)), 50)) do
 			if IsValid(door) and door:GetClass() == "prop_door_rotating" then
@@ -56,31 +64,10 @@ ENT.PossessionBinds = {
 	end}},
 	[IN_ATTACK2] = {{coroutine = true,onkeydown = function(self)
 		if not self.CanFT then if self.FT then self:StopFT()end return end
-		if not self:IsRunning() then if self.FT then self:StopFT()end return end
 		if not self.FT then
 			self.FT = true
 			self:EmitSound("codz_megapack/zmb/ai/mechz2/v2/flame/start.wav")
 			ParticleEffectAttach("bo3_panzer_flame",PATTACH_POINT_FOLLOW,self,2)
-		end
-		if self.FT and (self:GetCooldown("PanzerFT")<=0) then 
-			self:SetCooldown("PanzerFT",0.1)
-			if file.Exists("entities/vfire/shared.lua", "LUA") then
-				-- self:Ignite(999,0)
-				local pos = util.QuickTrace(self:GetAttachment(2).Pos,self:GetAimVector()*300,{self,self:GetPossessor()}).HitPos
-
-				local life = math.Rand(10, 50)
-				local feed = life / 200
-				if math.random(1, 10) == 1 then
-					feed = feed * 6
-				end
-				local vel = VectorRand() * math.Rand(2, 4)
-				CreateVFireBall(life, feed, pos, vel)
-			end
-			self:Attack({range=300,damage = math.random(5), type = DMG_BURN, viewpunch=Angle(0,0,0)})
-			self:Timer(0.1,function()
-				if self:GetPossessor():KeyDown(IN_ATTACK2) then return end
-				self:StopFT()
-			end)
 		end
 	end}},
 	[IN_JUMP] = {{coroutine=false,onkeydown=function(self)self:Jump(350)end}},
@@ -90,9 +77,16 @@ ENT.PossessionBinds = {
 }
 
 -- Climbing --
-ENT.ClimbLedges = false
-ENT.ClimbProps = false
-ENT.ClimbLadders = false
+ENT.ClimbLedges = true
+ENT.ClimbLedgesMaxHeight = math.huge
+ENT.LedgeDetectionDistance = 30
+ENT.ClimbProps = true
+ENT.ClimbLadders = true
+ENT.LaddersUpDistance = 10
+ENT.ClimbSpeed = 600
+ENT.ClimbUpAnimation = "climb_2"
+ENT.ClimbAnimRate = 1
+ENT.ClimbOffset = Vector(-10, 0, 0)
 
 ENT.UseWalkframes = true
 
@@ -101,6 +95,13 @@ game.AddParticles("particles/blackops3zombies_fx.pcf")
 	PrecacheParticleSystem("bo3_panzer_flame")
 
 if SERVER then
+function ENT:WhileClimbing(ladder, left)
+	self:ResetSequence("climb_2")
+	if left < 20 then return true end 
+end
+function ENT:OnStopClimbing()
+	self:PlaySequenceAndMoveAbsolute("climb_3")
+end
 
 function ENT:OnSpawn()
 	self:EmitSound("codz_megapack/ww2/fireman/vox/zvox_fir_spawn_01.wav",80)
@@ -121,7 +122,7 @@ function ENT:OnSpawn()
 end
 
 function ENT:OnLandOnGround()
-	if self:IsDead() then return end
+	if self:IsDead() or self:IsClimbing() then return end
 	self:CICO(function()self:PlaySequenceAndMove("land")end)
 end
 
@@ -133,7 +134,10 @@ function ENT:CustomInitialize()
 	self.IdleAnimation = "idle"
 	self.JumpAnimation = "glide"
 	
-	self.SOUND_EVTTABLE = {["zmb_fireman_intro_jump_land"] = {"codz_megapack/ww2/brute/zmb_fs_walk_brute_default2_09.wav"}}
+	self.SOUND_EVTTABLE = {
+		["zmb_fireman_intro_jump_land"] = {"codz_megapack/ww2/brute/zmb_fs_walk_brute_default2_09.wav"},
+		["zmb_fireman_axe_whoosh"] = {"codz_megapack/ww2/fol/zmb_follower_mace_whoosh_0",5}
+	}
 	self.CanFT = true
 	
 	self:Timer(0.1,self.SetCollisionBounds, Vector(-15,-20,0), Vector(15, 20, 85))
@@ -166,6 +170,11 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 		self:EmitSound("codz_megapack/ww2/brute/zmb_fs_walk_brute_default2_0"..math.random(8)..".wav",511)
 		ParticleEffect("bo3_panzer_landing",self:LocalToWorld(Vector(20,0,0)), Angle(0,0,0), nil)
 		util.ScreenShake(self:GetPos(),100000,500000,0.5,512)
+	elseif e == "flame_start" and not self.FT then
+		self.FT = true
+		self:EmitSound("codz_megapack/zmb/ai/mechz2/v2/flame/start.wav")
+		ParticleEffectAttach("bo3_panzer_flame",PATTACH_POINT_FOLLOW,self,2)
+	elseif e == "flame_end" then self:StopFT()
 	end
 	
 	local evt = string.Explode(" ", e, false)
@@ -182,9 +191,32 @@ sound.Add({
 	sound = "codz_megapack/zmb/ai/mechz2/v2/flame/loop.wav"
 })
 function ENT:CustomThink()
-	if self.FT and self:GetCooldown("zmb_ai_mechz_ft_loop")<=0 then
-		self:EmitSound("zmb_ai_panzer_flamethrower_loop")
-		self:SetCooldown("zmb_ai_mechz_ft_loop",3.141)
+	if self.FT then
+		if self:GetCooldown("zmb_ai_mechz_ft_loop")<=0 then
+			self:EmitSound("zmb_ai_panzer_flamethrower_loop")
+			self:SetCooldown("zmb_ai_mechz_ft_loop",3.141)
+		end
+		if self:GetCooldown("PanzerFT")<=0 then
+			if not self.Taunting 
+			and (self:IsPossessed() and not self:GetPossessor():KeyDown(IN_ATTACK2)) then
+				self:StopFT()
+			end
+			self:SetCooldown("PanzerFT",0.1)
+			if file.Exists("entities/vfire/shared.lua", "LUA") then
+				-- self:Ignite(999,0)
+				local att = self:GetAttachment(2)
+				local pos = util.QuickTrace(att.Pos,att.Ang:Forward()*300,{self,self:GetPossessor()}).HitPos
+
+				local life = math.Rand(10, 50)
+				local feed = life / 200
+				if math.random(1, 10) == 1 then
+					feed = feed * 6
+				end
+				local vel = VectorRand() * math.Rand(2, 4)
+				CreateVFireBall(life, feed, pos, vel)
+			end
+			self:Attack({range=300,damage = math.random(5), type = DMG_BURN, viewpunch=Angle(0,0,0)})
+		end
 	end
 end
 
@@ -196,10 +228,10 @@ function ENT:StopFT()
 end
 
   -- AI --
-function ENT:OnMeleeAttack(enemy)
-	if self.FT then self:StopFT() end
-	self:PlaySequenceAndMove("att"..math.random(2),1,self.FaceEnemy)
-end
+-- function ENT:OnMeleeAttack(enemy)
+	-- if self.FT then self:StopFT() end
+	-- self:PlaySequenceAndMove("att"..math.random(2),1,self.FaceEnemy)
+-- end
 
 function ENT:OnRangeAttack(enemy)
 	if not self.CanFT then return end
@@ -208,22 +240,6 @@ function ENT:OnRangeAttack(enemy)
 		self.FT = true
 		self:EmitSound("codz_megapack/zmb/ai/mechz2/v2/flame/start.wav")
 		ParticleEffectAttach("bo3_panzer_flame",PATTACH_POINT_FOLLOW,self,2)
-	end
-	if self.FT and (self:GetCooldown("PanzerFT")<=0) then 
-		self:SetCooldown("PanzerFT",0.1)
-		if file.Exists("entities/vfire/shared.lua", "LUA") then
-			-- self:Ignite(999,0)
-			local pos = util.QuickTrace(self:GetAttachment(2).Pos,self:GetAimVector()*300,{self,self:GetPossessor()}).HitPos
-			
-			local life = math.Rand(10, 50)
-			local feed = life / 200
-			if math.random(1, 10) == 1 then
-				feed = feed * 6
-			end
-			local vel = VectorRand() * math.Rand(2, 4)
-			CreateVFireBall(life, feed, pos, vel)
-		end
-		self:Attack({range=300,damage = math.random(5), type = DMG_BURN, viewpunch=Angle(0,0,0)})
 	end
 end
 function ENT:OnOtherKilled(v,dmginfo)
