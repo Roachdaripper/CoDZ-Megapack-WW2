@@ -228,10 +228,10 @@ function ENT:StopFT()
 end
 
   -- AI --
--- function ENT:OnMeleeAttack(enemy)
-	-- if self.FT then self:StopFT() end
-	-- self:PlaySequenceAndMove("att"..math.random(2),1,self.FaceEnemy)
--- end
+function ENT:OnMeleeAttack(enemy)
+	if self.CanFT then return end
+	self:PlaySequenceAndMove("att"..math.random(2),1,self.FaceEnemy)
+end
 
 function ENT:OnRangeAttack(enemy)
 	if not self.CanFT then return end

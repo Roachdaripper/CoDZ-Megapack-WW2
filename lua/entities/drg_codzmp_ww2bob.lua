@@ -202,46 +202,46 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 			self:EmitSound("codz_megapack/ww2/global/fs/zmb_fs_default_walk_large_default_0"..math.random(9)..".wav",80)
 		end
 	elseif e == "ex_torso" then
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,6)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,6)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,5)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,5)
 		local bpos,bang = self:GetBonePosition(self:LookupBone("j_spinelower"))
 		ParticleEffect("fx_hellhound_explosion",bpos,bang,self)
 	elseif e == "ex_back_r_shoulder" then
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,6)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,6)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,5)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,5)
 		self:EmitSound("codz_megapack/ww2/bob/zmb_berl_bob_death_explo3.wav",511)
 		local bpos,bang = self:GetBonePosition(self:LookupBone("j_shoulder_ri"))
 		ParticleEffect("fx_hellhound_explosion",bpos+(self:GetForward()*-5),bang,self)
 	elseif e == "ex_front_r_shoulder" then
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,6)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,6)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,5)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,5)
 		self:EmitSound("codz_megapack/ww2/bob/zmb_berl_bob_death_explo3.wav",511)
 		local bpos,bang = self:GetBonePosition(self:LookupBone("j_shoulder_ri"))
 		ParticleEffect("fx_hellhound_explosion",bpos+(self:GetForward()*5),bang,self)
 	elseif e == "ex_back_l_shoulder" then
-		for i=41,44 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
-		for i=50,56 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
-		for i=75,87 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,6)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,6)
+		-- for i=41,44 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
+		-- for i=50,56 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
+		-- for i=75,87 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,5)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,5)
 		self:EmitSound("codz_megapack/ww2/bob/zmb_berl_bob_death_explo3.wav",511)
 		local bpos,bang = self:GetBonePosition(self:LookupBone("j_shoulder_le"))
 		ParticleEffect("fx_hellhound_explosion",bpos+(self:GetForward()*-5),bang,self)
 	elseif e == "ex_neck" then
-		for i=20,21 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
-		for i=127,129 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,6)
-		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,6)
+		-- for i=20,21 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
+		-- for i=127,129 do self:ManipulateBoneScale(i,Vector(0,0,0)) end
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("env_embers_small",PATTACH_POINT_FOLLOW,self,5)
+		ParticleEffectAttach("env_fire_tiny_smoke",PATTACH_POINT_FOLLOW,self,5)
 		self:EmitSound("codz_megapack/ww2/bob/zmb_berl_bob_death_explo3.wav",511)
 		local bpos,bang = self:GetBonePosition(self:LookupBone("j_neck"))
 		ParticleEffect("fx_hellhound_explosion",bpos,bang,self)
@@ -249,7 +249,7 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 	elseif e == "fire" then 
 		self:EmitSound("codz_megapack/ww2/bob/zmb_bob_gun_fire_0"..math.random(5)..".wav",511)
 		self.Laser = self:CreateProjectile(nil, {}, "_codzmp_bob_proj")
-		self.Laser:SetPos(self:GetAttachment(3).Pos)
+		self.Laser:SetPos(self:GetAttachment(2).Pos)
 		
 		self.Laser:SetEntityOwner(self)
 
@@ -289,7 +289,7 @@ function ENT:HandleAnimEvent(a,b,c,d,e)
 			self:SetHealth(self:Health() + (math.random(250,500)*mul))
 		end
 		local fx = self.VFX_EVTTABLE[evt[2]]
-		ParticleEffectAttach(fx,PATTACH_POINT_FOLLOW,self,evt[3])
+		ParticleEffectAttach(fx,PATTACH_POINT_FOLLOW,self,evt[3]-1)
 		-- self:Timer(1,self.StopParticles)
 	end
 end
@@ -355,7 +355,7 @@ function ENT:OnDeath(dmg)
 	self.OnIdleSounds = {}
 	self:Timer(0.5,self.EmitSound,"codz_megapack/ww2/bob/zmb_bob_gun_buildup_0"..math.random(5)..".wav")
 	self:PSAM("death")
-	for i=1,5 do ParticleEffectAttach("bo3_napalm_fs",PATTACH_POINT_FOLLOW,self,2) end
+	for i=1,5 do ParticleEffectAttach("bo3_napalm_fs",PATTACH_POINT_FOLLOW,self,1) end
 	self:SetCollisionBounds(Vector(-1,-1,0),Vector(1,1,1))
 	self:PauseCoroutine(false)
 end
@@ -366,8 +366,8 @@ function ENT:ElectricalDischarge(delay,reps,start)
 			self:ParticleEffect("electrical_arc_01","fx_vfx"..math.random(2,6),
 				self:RandomPos(128))
 			util.ParticleTracerEx("electrical_arc_01",
-				self:GetAttachment(math.random(2,6)).Pos,
-				self:GetAttachment(math.random(2,6)).Pos,
+				self:GetAttachment(math.random(5)).Pos,
+				self:GetAttachment(math.random(5)).Pos,
 				false, self:EntIndex(), math.random(2,6))
 		end)
 	end
